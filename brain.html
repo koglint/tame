@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Brain SVG</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    
+    /* Base styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: #f3f6f9;
+        font-size: clamp(10px, 4vw, 36px); /* Prevents extreme sizes */
+    }
+
+    .topDiv {
+        display: flex;
+        align-items: center; /* Centers vertically */
+        justify-content: center; /* Centers horizontally (optional) */
+        height: 10vh;
+        box-sizing: border-box;
+        background-color: rgb(176, 176, 212);
+        z-index: 3;
+        display: flex;
+        font-size: 5vw;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    
+
+    #svg-container-1 {
+        display: flex;
+        flex-direction: column;  /* Stack them vertically */
+        align-items: center;     /* Center them horizontally */
+        justify-content: center; /* Center them vertically */
+        height: 90vh;
+        width: 100vw;
+    }
+
+    #svg-container-1 svg {
+        box-sizing: border-box;
+        /* The !important here helps override any inline SVG sizing */
+        width: auto !important;
+        height: 95% !important;
+        overflow: visible !important;
+    }
+
+    #brain-lateral {
+        max-width: 500px; /* Adjust as needed */
+        z-index: 2; /* Lateral on top initially */
+    }
+
+    #brain-sagittal {
+        max-width: 500px; /* Adjust as needed */
+        z-index: 1; /* Sagittal underneath initially */
+    }
+
+
+    /* Unique styling for each info box */
+    .info-hippocampus-fill {
+        background-color: #ff5733;
+        color: white;
+    }
+
+    .info-pfc-fill {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .info-amygdala-fill {
+        background-color: #FFD700;
+        color: black;
+    }
+
+    .info-acc-fill {
+        background-color: #1E90FF;
+        color: white;
+    }
+
+    
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007BFF;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+   
+
+    h1 {
+        font-size: clamp(10px, 1em, 50px);
+        font-weight: 900;
+        padding: 5px;
+        box-sizing: border-box;
+        overflow: hidden;
+        margin-block-start: 0px;
+        margin-block-end: 0px;
+        
+    }
+
+    
+
+       
+
+    /* When lobes are hidden, allow interactions with sagittal */
+    .hidden {
+        pointer-events: none;
+    }
+
+    .close-btn {
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        color: red;
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
+
+    .close-btn:hover {
+        color: darkred;
+    }
+
+
+    /*Laptops and Tablets*/
+    @media (min-width: 769px) {
+        .svg-wrapper {
+            position: absolute;
+            width: 50vw;
+            height: auto;
+        }
+
+        .info-box {
+            position: absolute;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 250px;
+        }
+
+        .info-header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+
+        /* 🎯 Define fixed positions */
+        .info-pos-0 { bottom: 5vh; right: 5vw; }  /* Hippocampus */
+        .info-pos-1 { top: 15vh; left: 5vw; }     /* Prefrontal Cortex */
+        .info-pos-2 { bottom: 5vh; left: 5vw; }   /* Amygdala */
+        .info-pos-3 { top: 15vh; right: 5vw; }    /* Anterior Cingulate Cortex */
+        
+
+        .restoreButton {
+            position: absolute;
+            top: 11vh;
+            left: 0;
+        }
+
+    }
+
+
+
+
+
+
+
+    /*Mobile Phone Screens*/
+    /* 📱 For phones (screens smaller than 768px) */
+    @media (max-width: 768px) {
+        .svg-wrapper {
+            position: absolute;
+            top: 20vh;
+            width: 70vw;
+            height: auto;
+        }
+
+        .info-box {
+            position: absolute;
+            padding: 2px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 90vw;  /* Full-width on small screens */
+            max-width: none;
+            height: 7vh;  
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: clamp(10px, 4vw, 20px); /* Scales with viewport */
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* 🚀 Make p tag text responsive */
+        .info-box p {
+            width: 100%;
+            padding: 0 10px;
+            margin: 0;
+            font-size: clamp(10px, 4vw, 16px); /* Dynamic font size */
+            line-height: 1.2;
+            text-align: center;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+        }
+
+        /* 🎯 Define fixed positions */
+        .info-pos-0 { bottom: 5vh; left: 5vw; }  /* Hippocampus */
+        .info-pos-1 { bottom: 29vh; left: 5vw; }     /* Prefrontal Cortex */
+        .info-pos-2 { bottom: 13vh; left: 5vw; }   /* Amygdala */
+        .info-pos-3 { bottom: 21vh; left: 5vw; }    /* Anterior Cingulate Cortex */
+    
+        .restoreButton {
+            position: absolute;
+            top: 11vh;
+            left: 0;
+        }
+
+        
+        
+    }
+
+
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="topDiv">
+        <h1>Interactive Brain Image</h1>
+    </div>
+
+    <!-- Container for both SVG images -->
+    <div id="svg-container-1">
+        <div id="brain-sagittal" class="svg-wrapper"></div> <!-- Background image -->
+        <div id="brain-lateral" class="svg-wrapper"></div> <!-- Foreground image -->
+        <button id="move-lobes" class="restoreButton">Restore Brain Lobes</button>
+
+    </div>
+
+    <script>
+        // Load both external SVGs
+            Promise.all([
+                fetch('assets/brain-sag-lobes-simple.svg').then(res => res.text()),
+                fetch('assets/brain-lat-lobes-simple.svg').then(res => res.text())
+            ])
+                .then(([sagittalSvg, lateralSvg]) => {
+                    document.getElementById('brain-sagittal').innerHTML = sagittalSvg;
+                    document.getElementById('brain-lateral').innerHTML = lateralSvg;
+
+                    // Object mapping group IDs to their respective fill paths
+                    const brainParts = {
+                        "brain-stem-group": "brain-stem-fill",
+                        "cerebellum-group": "cerebellum-fill",
+                        "frontal-lobe-group": "frontal-lobe-fill",
+                        "parietal-lobe-group": "parietal-lobe-fill",
+                        "temporal-lobe-group": "temporal-lobe-fill",
+                        "occipital-lobe-group": "occipital-lobe-fill"
+                    };
+
+                    let originalTransforms = {};
+                    let isHidden = {};  // Tracks hidden parts
+
+                    const brainMovement = {
+                        "frontal-lobe-group": { x: -60, y: -60 },
+                        "parietal-lobe-group": { x: 60, y: -60 },
+                        "temporal-lobe-group": { x: -120, y: 80 },
+                        "occipital-lobe-group": { x: 60, y: 0 },
+                        "cerebellum-group": { x: 60, y: 60 },
+                        "brain-stem-group": { x: 0, y: 80 }
+                    };
+
+                    // Store original transforms
+                    Object.keys(brainMovement).forEach(groupId => {
+                        let group = document.getElementById(groupId);
+                        if (group) {
+                            originalTransforms[groupId] = group.getAttribute("transform") || "translate(0,0)";
+                            isHidden[groupId] = false; // Initially, no parts are hidden
+                        }
+                    });
+
+                    // Click event for individual brain parts
+                    let activeAnimations = 0; // Tracks animations in progress
+                    let hiddenCount = 0;
+                    const totalBrainParts = Object.keys(brainParts).length;
+
+                    function updateCount(delta) {
+                        activeAnimations += delta;
+                        if (activeAnimations === 0 && hiddenCount === totalBrainParts) {
+                            document.getElementById("brain-lateral").classList.add("hidden");
+                        }
+                    }
+
+                    Object.keys(brainParts).forEach(groupId => {
+                        let group = document.getElementById(groupId);
+
+                        if (group) {
+                            group.addEventListener("click", function () {
+                                if (!isHidden[groupId]) {
+                                    updateCount(1);
+                                    gsap.to(group, {
+                                        attr: { transform: `translate(${brainMovement[groupId].x}, ${brainMovement[groupId].y})` },
+                                        opacity: 0,
+                                        duration: 1,
+                                        ease: "power2.out",
+                                        onUpdate: () => updateCount(-1), // Decrease count when done
+                                        onComplete: () => {
+                                            isHidden[groupId] = true;
+                                            hiddenCount++;
+
+                                            if (hiddenCount === totalBrainParts) {
+                                                document.getElementById("brain-lateral").classList.add("hidden");
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
+                    // Button Click - Restore lobes and interactions
+                    document.getElementById("move-lobes").addEventListener("click", function () {
+                        if (activeAnimations > 0) return; // Prevent triggering if animations are running
+
+                        Object.keys(brainMovement).forEach(groupId => {
+                            let group = document.getElementById(groupId);
+                            if (group && isHidden[groupId]) {
+                                updateCount(1);
+                                gsap.to(group, {
+                                    opacity: 1,
+                                    duration: 1,
+                                    ease: "power2.out"
+                                });
+
+                                gsap.to(group, {
+                                    attr: { transform: originalTransforms[groupId] },
+                                    duration: 1,
+                                    ease: "power2.out",
+                                    onUpdate: () => updateCount(-1), // Decrease count when done
+                                    onComplete: () => {
+                                        isHidden[groupId] = false;
+                                        hiddenCount--;
+
+                                        document.getElementById("brain-lateral").classList.remove("hidden");
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+
+                    
+                    // List of brain parts and their info
+                    const brainPartsSag = [
+                        { 
+                            id: "hippocampus-fill", 
+                            name: "Hippocampus", 
+                            color: "#ff5733", 
+                            info: "The hippocampus is essential for memory formation and spatial navigation." 
+                        },
+                        { 
+                            id: "pfc-fill", 
+                            name: "Prefrontal Cortex", 
+                            color: "#4CAF50", 
+                            info: "The prefrontal cortex is involved in planning, decision-making, and social behavior." 
+                        },
+                        { 
+                            id: "amygdala-fill", 
+                            name: "Amygdala", 
+                            color: "#FFD700", 
+                            info: "The amygdala plays a key role in emotional processing and fear responses." 
+                        },
+                        { 
+                            id: "acc-fill", 
+                            name: "Anterior Cingulate Cortex", 
+                            color: "#1E90FF", 
+                            info: "The ACC is involved in emotion regulation, decision-making, and impulse control." 
+                        }
+                    ];
+
+                    // Track active info boxes per brain part
+                    let activeInfoBoxes = {};
+
+                    // Define fixed positions for up to four info boxes
+                    const fixedPositions = [
+                        { bottom: "5vh", right: "5vw" },  // hippo
+                        { top: "15vh", left: "5vw" },  // pfc
+                        { bottom: "5vh", left: "5vw" },  // amygdala
+                        { top: "15vh", right: "5vw" }   // acc
+                    ];
+
+                    // Assign positions based on the index
+                    // Assign positions based on the index
+                    brainPartsSag.forEach((part, index) => {
+                        const element = document.getElementById(part.id);
+
+                        if (element) {
+                            let originalColor = element.getAttribute("fill") || window.getComputedStyle(element).getPropertyValue("fill");
+
+                            function closeInfoBox() {
+                                if (activeInfoBoxes[part.id]) {
+                                    document.body.removeChild(activeInfoBoxes[part.id]);
+                                    delete activeInfoBoxes[part.id];
+                                    element.style.fill = "";
+                                    element.setAttributeNS(null, "fill", originalColor);
+                                }
+                            }
+
+                            element.addEventListener("click", function () {
+                                if (activeInfoBoxes[part.id]) {
+                                    closeInfoBox();
+                                } else {
+                                    // Create a new info box
+                                    let infoBox = document.createElement("div");
+                                    infoBox.classList.add("info-box", `info-${part.id}`, `info-pos-${index}`); // Add unique position class
+
+                                    infoBox.innerHTML = `
+                                        <div class="info-header">
+                                            <strong>${part.name}</strong>
+                                        </div>
+                                        <p>${part.info}</p>
+                                        <span class="close-btn" data-id="${part.id}">&times;</span>
+                                    `;
+
+                                    document.body.appendChild(infoBox);
+                                    activeInfoBoxes[part.id] = infoBox;
+
+                                    element.style.fill = "";
+                                    element.setAttributeNS(null, "fill", part.color);
+
+                                    // Close button functionality
+                                    infoBox.querySelector(".close-btn").addEventListener("click", closeInfoBox);
+                                }
+                            });
+                        } else {
+                            console.error(`Brain part with ID '${part.id}' not found in SVG.`);
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+
+                })
+                .catch(error => console.error('Error loading SVG:', error));
+
+    </script>
+
+</body>
+
+</html>
