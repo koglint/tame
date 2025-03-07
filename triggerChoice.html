@@ -51,21 +51,39 @@
             color: white;
         }
 
-        .next-button {
+        .nav-buttons {
             margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-button {
             padding: 15px 30px;
             font-size: 1.2rem;
-            cursor: not-allowed;
-            background-color: #ccc;
-            color: white;
             border: none;
             border-radius: 10px;
             transition: background-color 0.3s ease-in-out;
         }
 
+        .next-button {
+            background-color: #ccc;
+            color: white;
+            cursor: not-allowed;
+        }
+
         .next-button.enabled {
             background-color: #008CBA;
             cursor: pointer;
+        }
+
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -85,7 +103,10 @@
             <button onclick="selectTrigger(this, trigger8)"></button>
             <button onclick="selectTrigger(this, trigger9)"></button>
         </div>
-        <button id="nextBtn" class="next-button" disabled onclick="goToNextPage()">NEXT</button>
+        <div class="nav-buttons">
+            <button class="nav-button back-button" onclick="goToMain()">BACK</button>
+            <button id="nextBtn" class="nav-button next-button" disabled onclick="goToNextPage()">NEXT</button>
+        </div>
     </div>
 
     <script>
@@ -132,6 +153,10 @@
             if (selectedTrigger) {
                 window.location.href = "reactionChoice.html";
             }
+        }
+
+        function goToMain() {
+            window.location.href = "main.html";
         }
     </script>
 </body>
