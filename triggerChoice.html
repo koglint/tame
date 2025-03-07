@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigger Choice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: lightblue;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 80vw;
+            max-width: 600px;
+            background-color: aquamarine;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .button-grid button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .button-grid button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: not-allowed;
+            background-color: #ccc;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .next-button.enabled {
+            background-color: #008CBA;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>What happened?</h1>
+        <p>If none of these options are exactly right, just pick the one that is the closest.</p>
+        <div class="button-grid">
+            <button onclick="selectTrigger(this, trigger1)"></button>
+            <button onclick="selectTrigger(this, trigger2)"></button>
+            <button onclick="selectTrigger(this, trigger3)"></button>
+            <button onclick="selectTrigger(this, trigger4)"></button>
+            <button onclick="selectTrigger(this, trigger5)"></button>
+            <button onclick="selectTrigger(this, trigger6)"></button>
+            <button onclick="selectTrigger(this, trigger7)"></button>
+            <button onclick="selectTrigger(this, trigger8)"></button>
+            <button onclick="selectTrigger(this, trigger9)"></button>
+        </div>
+        <button id="nextBtn" class="next-button" disabled onclick="goToNextPage()">NEXT</button>
+    </div>
+
+    <script>
+        let selectedTrigger = null;
+        let previousButton = null;
+
+        let trigger1 = "I didn't understand what to do";
+        let trigger2 = "Someone annoyed me";
+        let trigger3 = "I couldn't do what I was asked";
+        let trigger4 = "Someone disrespected me, my friends or my family";
+        let trigger5 = "Someone took my stuff";
+        let trigger6 = "Something unexpected or unplanned happened";
+        let trigger7 = "There was too much going on";
+        let trigger8 = "I felt left out or ignored";
+        let trigger9 = "I was reminded of something bad";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let buttons = document.querySelectorAll(".button-grid button");
+            let triggers = [trigger1, trigger2, trigger3, trigger4, trigger5, trigger6, trigger7, trigger8, trigger9];
+
+            buttons.forEach((button, index) => {
+                button.textContent = triggers[index];
+            });
+        });
+
+        function selectTrigger(button, trigger) {
+            localStorage.setItem('selectedTrigger', trigger);
+            selectedTrigger = trigger;
+
+            if (previousButton) {
+                previousButton.style.backgroundColor = "";
+                previousButton.style.color = "black"; // Reset previous button text color
+            }
+
+            button.style.backgroundColor = "#008CBA";
+            button.style.color = "white";
+            previousButton = button;
+
+            document.getElementById('nextBtn').classList.add('enabled');
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function goToNextPage() {
+            if (selectedTrigger) {
+                window.location.href = "reactionChoice.html";
+            }
+        }
+    </script>
+</body>
+
+</html>

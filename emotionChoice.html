@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Choice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: lightblue;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 80vw;
+            max-width: 600px;
+            background-color: aquamarine;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .button-grid button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .button-grid button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .next-button {
+            background-color: #ccc;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .next-button.enabled {
+            background-color: #008CBA;
+            cursor: pointer;
+        }
+
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>How did you feel when the event occurred?</h1>
+        <div class="button-grid">
+            <button onclick="selectEmotion(this, 'Angry 😡')">Angry 😡</button>
+            <button onclick="selectEmotion(this, 'Anxious 😰')">Anxious 😰</button>
+            <button onclick="selectEmotion(this, 'Afraid 😨')">Afraid 😨</button>
+            <button onclick="selectEmotion(this, 'Sad 😢')">Sad 😢</button>
+            <button onclick="selectEmotion(this, 'Embarrassed 😳')">Embarrassed 😳</button>
+            <button onclick="selectEmotion(this, 'Overwhelmed 🤯')">Overwhelmed 🤯</button>
+            <button onclick="selectEmotion(this, 'Disgusted 🤢')">Disgusted 🤢</button>
+            <button onclick="selectEmotion(this, 'Numb 😑')">Numb 😑</button>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button back-button" onclick="goBack()">BACK</button>
+            <button id="nextBtn" class="nav-button next-button" disabled onclick="goToBrainPage()">NEXT</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedEmotion = null;
+        let previousButton = null;
+
+        function selectEmotion(button, emotion) {
+            localStorage.setItem('selectedEmotion', emotion);
+            selectedEmotion = emotion;
+
+            if (previousButton) {
+                previousButton.style.backgroundColor = "";
+                previousButton.style.color = "black"; // Reset previous button text color
+            }
+
+            button.style.backgroundColor = "#008CBA";
+            button.style.color = "white";
+            previousButton = button;
+
+            document.getElementById('nextBtn').classList.add('enabled');
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function goToBrainPage() {
+            if (selectedEmotion) {
+                window.location.href = "chainSummary.html";
+            }
+        }
+
+        function goBack() {
+            window.location.href = "reactionChoice.html";
+        }
+    </script>
+</body>
+
+</html>

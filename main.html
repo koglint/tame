@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Grid</title>
+    <title>Main Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,199 +14,45 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            background-color: lightblue;
         }
 
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .button-grid button {
-            padding: 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .button-grid button.selected {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .log-container {
-            margin-top: 20px;
-            width: 300px;
+        .container {
             text-align: center;
         }
 
-        .log-container button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 14px;
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .start-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #nextBtn,
-        #nextBtn2 {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        #nextBtn.enabled,
-        #nextBtn2.enabled {
             background-color: #008CBA;
-            cursor: pointer;
             color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .start-button:hover {
+            background-color: #005f73;
         }
     </style>
 </head>
 
 <body>
-    <h1>Button Grid</h1>
-
-    <!-- First set of buttons -->
-    <div class="button-grid" id="grid1">
-        <button onclick="selectButton(this, 'Button 1')">Button 1</button>
-        <button onclick="selectButton(this, 'Button 2')">Button 2</button>
-        <button onclick="selectButton(this, 'Button 3')">Button 3</button>
-        <button onclick="selectButton(this, 'Button 4')">Button 4</button>
-    </div>
-    <button id="nextBtn" onclick="showSecondGrid()" disabled>NEXT</button>
-
-    <!-- Second set of buttons (Initially Hidden) -->
-    <div class="button-grid hidden" id="grid2">
-        <button onclick="selectButton(this, 'New Button 1')">New Button 1</button>
-        <button onclick="selectButton(this, 'New Button 2')">New Button 2</button>
-        <button onclick="selectButton(this, 'New Button 3')">New Button 3</button>
-        <button onclick="selectButton(this, 'New Button 4')">New Button 4</button>
-    </div>
-    <button id="nextBtn2" onclick="goToBrainPage()" disabled class="hidden">NEXT</button>
-
-    <div class="log-container">
-        <h2>Button Press Log</h2>
-        <ul id="log"></ul>
-        <button onclick="undoLastPress()">Whoops! Undo Last Press</button>
-        <button onclick="clearStorage()">Clear Log</button>
-        <button onclick="goBack()">BACK</button>
+    <div class="container">
+        <h1>Welcome</h1>
+        <button class="start-button" onclick="startJourney()">Start</button>
     </div>
 
     <script>
-        let selectedButton = null; // Track currently selected button
-
-        function selectButton(button, buttonName) {
-            if (selectedButton === button) {
-                // Deselect if clicking the same button
-                button.classList.remove("selected");
-                selectedButton = null;
-                document.getElementById('nextBtn').classList.remove('enabled');
-                document.getElementById('nextBtn').disabled = true;
-                document.getElementById('nextBtn2').classList.remove('enabled');
-                document.getElementById('nextBtn2').disabled = true;
-            } else {
-                // Deselect previous and select new button
-                if (selectedButton) selectedButton.classList.remove("selected");
-                button.classList.add("selected");
-                selectedButton = button;
-
-                // Enable correct NEXT button
-                if (document.getElementById('grid1').style.display !== "none") {
-                    document.getElementById('nextBtn').classList.add('enabled');
-                    document.getElementById('nextBtn').disabled = false;
-                } else {
-                    document.getElementById('nextBtn2').classList.add('enabled');
-                    document.getElementById('nextBtn2').disabled = false;
-                }
-            }
+        function startJourney() {
+            window.location.href = "triggerChoice.html";
         }
-
-        function storeButtonPress(button) {
-            let presses = JSON.parse(localStorage.getItem('buttonPresses')) || [];
-            presses.push({ button: button, timestamp: new Date().toLocaleString() });
-            localStorage.setItem('buttonPresses', JSON.stringify(presses));
-            displayLog();
-        }
-
-        function displayLog() {
-            let logContainer = document.getElementById('log');
-            logContainer.innerHTML = "";
-
-            let presses = JSON.parse(localStorage.getItem('buttonPresses')) || [];
-            if (presses.length === 0) {
-                logContainer.innerHTML = "<li>No button presses recorded</li>";
-                return;
-            }
-
-            presses.forEach(entry => {
-                let listItem = document.createElement('li');
-                listItem.textContent = `${entry.button} pressed at ${entry.timestamp}`;
-                logContainer.appendChild(listItem);
-            });
-        }
-
-        function undoLastPress() {
-            let presses = JSON.parse(localStorage.getItem('buttonPresses')) || [];
-            if (presses.length > 0) {
-                presses.pop();
-                localStorage.setItem('buttonPresses', JSON.stringify(presses));
-                displayLog();
-            } else {
-                alert("No entries to undo!");
-            }
-        }
-
-        function clearStorage() {
-            if (confirm("Are you sure you want to clear the log? This cannot be undone!")) {
-                localStorage.removeItem('buttonPresses');
-                displayLog();
-            }
-        }
-
-        function showSecondGrid() {
-            if (!selectedButton) return; // Prevent transition if no selection
-
-            storeButtonPress(selectedButton.textContent); // Store selected button
-            selectedButton = null; // Reset selection
-
-            let grid1 = document.getElementById('grid1');
-            let grid2 = document.getElementById('grid2');
-            let nextBtn = document.getElementById('nextBtn');
-            let nextBtn2 = document.getElementById('nextBtn2');
-
-            // Fade out first grid
-            grid1.classList.add('hidden');
-            nextBtn.classList.add('hidden');
-
-            // Delay and then fade in the second grid
-            setTimeout(() => {
-                grid1.style.display = 'none';
-                grid2.classList.remove('hidden');
-                nextBtn2.classList.remove('hidden');
-            }, 500);
-        }
-
-        function goToBrainPage() {
-            if (!selectedButton) return;
-            storeButtonPress(selectedButton.textContent);
-            window.location.href = "brain.html";
-        }
-
-        function goBack() {
-            window.history.back();
-        }
-
-        document.addEventListener('DOMContentLoaded', displayLog);
     </script>
 </body>
 

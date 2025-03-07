@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: lightblue;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background-color: aquamarine;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .summary-item {
+            font-size: 1.2rem;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .next-button {
+            background-color: #008CBA;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Summary of Your Selections</h1>
+        <div class="summary-box">
+            <div class="summary-item" id="selectedTrigger">Trigger: Loading...</div>
+            <div class="summary-item" id="selectedReaction">Reaction: Loading...</div>
+            <div class="summary-item" id="selectedEmotion">Emotion: Loading...</div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button back-button" onclick="goBack()">BACK</button>
+            <button class="nav-button next-button" onclick="goToBrainPage()">NEXT</button>
+        </div>
+    </div>
+
+    <script>
+        function loadSelections() {
+            document.getElementById('selectedTrigger').textContent = "Trigger: " + (localStorage.getItem('selectedTrigger') || "Not selected");
+            document.getElementById('selectedReaction').textContent = "Reaction: " + (localStorage.getItem('selectedReaction') || "Not selected");
+            document.getElementById('selectedEmotion').textContent = "Emotion: " + (localStorage.getItem('selectedEmotion') || "Not selected");
+
+        }
+
+        function goToBrainPage() {
+            window.location.href = "brain.html";
+        }
+
+        function goBack() {
+            window.location.href = "emotionChoice.html";
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSelections);
+    </script>
+</body>
+
+</html>
