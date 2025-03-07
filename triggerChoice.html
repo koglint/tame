@@ -5,26 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trigger Choice</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: lightblue;
-        }
 
-        .container {
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
 
         .button-grid {
             display: grid;
@@ -51,44 +34,14 @@
             color: white;
         }
 
-        .nav-buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 10px;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .next-button {
-            background-color: #ccc;
-            color: white;
-            cursor: not-allowed;
-        }
-
-        .next-button.enabled {
-            background-color: #008CBA;
-            cursor: pointer;
-        }
-
-        .back-button {
-            background-color: #f44336;
-            color: white;
-            cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #c0392b;
-        }
+        
     </style>
 </head>
 
 <body>
+    <div class="topDiv">
+    
+    </div>
     <div class="container">
         <h1>What happened?</h1>
         <p>If none of these options are exactly right, just pick the one that is the closest.</p>
@@ -103,8 +56,12 @@
             <button onclick="selectTrigger(this, trigger8)"></button>
             <button onclick="selectTrigger(this, trigger9)"></button>
         </div>
+        
+    </div>
+
+    <div class="bottomDiv">
         <div class="nav-buttons">
-            <button class="nav-button back-button" onclick="goToMain()">BACK</button>
+            <button class="nav-button back-button" onclick="goBack()">BACK</button>
             <button id="nextBtn" class="nav-button next-button" disabled onclick="goToNextPage()">NEXT</button>
         </div>
     </div>
@@ -155,7 +112,7 @@
             }
         }
 
-        function goToMain() {
+        function goBack() {
             window.location.href = "index.html";
         }
     </script>
