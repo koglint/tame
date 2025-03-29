@@ -23,7 +23,7 @@
         display: flex;
         align-items: center; /* Centers vertically */
         justify-content: center; /* Centers horizontally (optional) */
-        height: 10vh;
+        height: 15vh;
         box-sizing: border-box;
         background-color: rgb(176, 176, 212);
         z-index: 3;
@@ -33,6 +33,46 @@
         padding: 0px;
     }
 
+    .belowTopDiv {
+        height: 5vh;
+        width: 100%;
+        background-color: rosybrown;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .brain-summary-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.brain-summary-item {
+    width: 15vw;
+    font-size: 1rem;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgb(154, 231, 219);
+}
+
+.brain-chain-icon {
+    width: 30px;
+    height: 30px;
+    rotate: 90deg;
+}
+
+    
+
     
 
     #svg-container-1 {
@@ -40,8 +80,9 @@
         flex-direction: column;  /* Stack them vertically */
         align-items: center;     /* Center them horizontally */
         justify-content: center; /* Center them vertically */
-        height: 90vh;
-        width: 100vw;
+        height: 80vh;
+        width: 50vw;
+        align-self: flex-start;
     }
 
     #svg-container-1 svg {
@@ -136,24 +177,44 @@
     }
 
 
-    /*Laptops and Tablets*/
-    @media (min-width: 769px) {
+        .page-wrapper {
+            background-color: aliceblue;
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+        }
+
         .svg-wrapper {
             position: absolute;
             width: 50vw;
             height: auto;
         }
 
-        .info-box {
+        .story-wrapper {
+            width: 50vw;
+            background-color: whitesmoke;
+        }
+
+        .info-wrapper {
             position: absolute;
+            top: 22vh; /* Adjust to your needs */
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+            gap: 10px; /* Space between info boxes */
+            align-items: flex-start;
+        }
+
+        .info-box {
             padding: 10px;
             border: 1px solid black;
             border-radius: 5px;
             font-size: 14px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 250px;
+            width: 200px;
+            position: relative;
         }
+
 
         .info-header {
             position: relative;
@@ -166,92 +227,26 @@
 
 
         /* 🎯 Define fixed positions */
-        .info-pos-0 { bottom: 5vh; right: 5vw; }  /* Hippocampus */
-        .info-pos-1 { top: 15vh; left: 5vw; }     /* Prefrontal Cortex */
-        .info-pos-2 { bottom: 5vh; left: 5vw; }   /* Amygdala */
-        .info-pos-3 { top: 15vh; right: 5vw; }    /* Anterior Cingulate Cortex */
+        .info-pos-0 { top: 21vh; left: 80vw; }  /* Hippocampus */
+        .info-pos-1 { top: 21vh; left: 5vw; }     /* Prefrontal Cortex */
+        .info-pos-2 { top: 21vh; left: 55vw; }   /* Amygdala */
+        .info-pos-3 { top: 21vh; left: 30vw; }    /* Anterior Cingulate Cortex */
         
 
         .restoreButton {
-            position: absolute;
-            top: 11vh;
-            left: 0;
-        }
-
-    }
-
-
-
-
-
-
-
-    /*Mobile Phone Screens*/
-    /* 📱 For phones (screens smaller than 768px) */
-    @media (max-width: 768px) {
-        .svg-wrapper {
-            position: absolute;
-            top: 20vh;
-            width: 70vw;
-            height: auto;
-        }
-
-        .info-box {
-            position: absolute;
-            padding: 2px;
-            border: 1px solid black;
             border-radius: 5px;
-            font-size: 0.9rem;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            width: 90vw;  /* Full-width on small screens */
-            max-width: none;
-            height: 7vh;  
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: visible;
+            height: 70%;
+            width: 15vw;
+            font-size: 1rem;
         }
 
-        .info-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: clamp(10px, 4vw, 20px); /* Scales with viewport */
-            font-weight: bold;
-            width: 100%;
-            text-align: center;
-        }
-
-        /* 🚀 Make p tag text responsive */
-        .info-box p {
-            width: 100%;
-            padding: 0 10px;
-            margin: 0;
-            font-size: clamp(10px, 4vw, 16px); /* Dynamic font size */
-            line-height: 1.2;
-            text-align: center;
-            word-wrap: break-word;
-            white-space: normal;
-            overflow: hidden;
-        }
-
-        /* 🎯 Define fixed positions */
-        .info-pos-0 { bottom: 5vh; left: 5vw; }  /* Hippocampus */
-        .info-pos-1 { bottom: 29vh; left: 5vw; }     /* Prefrontal Cortex */
-        .info-pos-2 { bottom: 13vh; left: 5vw; }   /* Amygdala */
-        .info-pos-3 { bottom: 21vh; left: 5vw; }    /* Anterior Cingulate Cortex */
     
-        .restoreButton {
-            position: absolute;
-            top: 11vh;
-            left: 0;
-        }
 
-        
-        
-    }
+
+
+
+
+
 
 
 
@@ -266,18 +261,44 @@
 <body>
 
     <div class="topDiv">
-        <h1>Interactive Brain Image</h1>
+        <div class="brain-summary-box">
+            <div class="brain-summary-item" id="selectedTrigger">Trigger: Loading...</div>
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="brain-chain-icon">
+            <div class="brain-summary-item" id="emotionThen">Emotion Then: Loading...</div>
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="brain-chain-icon">
+            <!-- <div class="brain-summary-item" id="bodySensationThen">Body Sensations Then: Loading...</div>
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="brain-chain-icon"> -->
+            <div class="brain-summary-item" id="selectedReaction">Reaction: Loading...</div>
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="brain-chain-icon">
+            <div class="brain-summary-item" id="consequence">Consequence: Loading...</div>
+        </div>
+    </div>
+    <div class="belowTopDiv">
+        <button class="restoreButton" id="move-lobes">Restore Brain Lobes</button>
+        <button class="restoreButton" onclick="resetSelections()">Start Over</button>
     </div>
 
     <!-- Container for both SVG images -->
-    <div id="svg-container-1">
-        <div id="brain-sagittal" class="svg-wrapper"></div> <!-- Background image -->
-        <div id="brain-lateral" class="svg-wrapper"></div> <!-- Foreground image -->
-        <button id="move-lobes" class="restoreButton">Restore Brain Lobes</button>
+    <div class="page-wrapper">
+        <div id="svg-container-1">
+            <div id="brain-sagittal" class="svg-wrapper"></div> <!-- Background image -->
+            <div id="brain-lateral" class="svg-wrapper"></div> <!-- Foreground image -->
+        </div>
+        <div class="story-wrapper"> 
 
+        </div>
     </div>
 
     <script>
+
+        function loadSelections() {
+                document.getElementById('selectedTrigger').textContent = (localStorage.getItem('selectedTrigger') || "Not selected");
+                document.getElementById('emotionThen').textContent = (localStorage.getItem('emotionThen') || "Not selected");
+                // document.getElementById('bodySensationThen').textContent = (localStorage.getItem('bodySensationThen') || "Not selected");
+                document.getElementById('selectedReaction').textContent = (localStorage.getItem('selectedReaction') || "Not selected");
+                document.getElementById('consequence').textContent = (localStorage.getItem('consequenceThen') || "Not selected");
+            }
+
         // Load both external SVGs
             Promise.all([
                 fetch('assets/brain-sag-lobes-simple.svg').then(res => res.text()),
@@ -388,89 +409,86 @@
                     });
 
 
-                    
+                    // Create a single wrapper for all info boxes
+                    let infoWrapper = document.createElement("div");
+                    infoWrapper.classList.add("info-wrapper");
+                    document.body.appendChild(infoWrapper); // Append it once
+
                     // List of brain parts and their info
                     const brainPartsSag = [
-                        { 
-                            id: "hippocampus-fill", 
-                            name: "Hippocampus", 
-                            color: "#ff5733", 
-                            info: "The hippocampus is essential for memory formation and spatial navigation." 
+                        {
+                            id: "hippocampus-fill",
+                            name: "Hippocampus",
+                            color: "#ff5733",
+                            info: "The hippocampus is essential for memory formation and spatial navigation."
                         },
-                        { 
-                            id: "pfc-fill", 
-                            name: "Prefrontal Cortex", 
-                            color: "#4CAF50", 
-                            info: "The prefrontal cortex is involved in planning, decision-making, and social behavior." 
+                        {
+                            id: "pfc-fill",
+                            name: "Prefrontal Cortex",
+                            color: "#4CAF50",
+                            info: "The prefrontal cortex is involved in planning, decision-making, and social behavior."
                         },
-                        { 
-                            id: "amygdala-fill", 
-                            name: "Amygdala", 
-                            color: "#FFD700", 
-                            info: "The amygdala plays a key role in emotional processing and fear responses." 
+                        {
+                            id: "amygdala-fill",
+                            name: "Amygdala",
+                            color: "#FFD700",
+                            info: "The amygdala plays a key role in emotional processing and fear responses."
                         },
-                        { 
-                            id: "acc-fill", 
-                            name: "Anterior Cingulate Cortex", 
-                            color: "#1E90FF", 
-                            info: "The ACC is involved in emotion regulation, decision-making, and impulse control." 
+                        {
+                            id: "acc-fill",
+                            name: "Anterior Cingulate Cortex",
+                            color: "#1E90FF",
+                            info: "The ACC is involved in emotion regulation, decision-making, and impulse control."
                         }
                     ];
 
-                    // Track active info boxes per brain part
-                    let activeInfoBoxes = {};
+                    let activeInfoBoxes = {}; // Track open info boxes
 
-                    // Define fixed positions for up to four info boxes
-                    const fixedPositions = [
-                        { bottom: "5vh", right: "5vw" },  // hippo
-                        { top: "15vh", left: "5vw" },  // pfc
-                        { bottom: "5vh", left: "5vw" },  // amygdala
-                        { top: "15vh", right: "5vw" }   // acc
-                    ];
+                    // Function to close a specific info box
+                    function closeInfoBox(partId, element, originalColor) {
+                        if (activeInfoBoxes[partId]) {
+                            infoWrapper.removeChild(activeInfoBoxes[partId]); // Remove only from wrapper
+                            delete activeInfoBoxes[partId];
+                            element.style.fill = "";
+                            element.setAttributeNS(null, "fill", originalColor);
+                        }
+                    }
 
-                    // Assign positions based on the index
-                    // Assign positions based on the index
-                    brainPartsSag.forEach((part, index) => {
+                    // Iterate over brain parts to create info boxes inside info-wrapper
+                    brainPartsSag.forEach(part => {
                         const element = document.getElementById(part.id);
 
                         if (element) {
                             let originalColor = element.getAttribute("fill") || window.getComputedStyle(element).getPropertyValue("fill");
 
-                            function closeInfoBox() {
-                                if (activeInfoBoxes[part.id]) {
-                                    document.body.removeChild(activeInfoBoxes[part.id]);
-                                    delete activeInfoBoxes[part.id];
-                                    element.style.fill = "";
-                                    element.setAttributeNS(null, "fill", originalColor);
-                                }
-                            }
-
                             element.addEventListener("click", function () {
                                 if (activeInfoBoxes[part.id]) {
-                                    closeInfoBox();
+                                    closeInfoBox(part.id, element, originalColor);
                                 } else {
-                                    // Create a new info box
+                                    // Create a new info box inside info-wrapper
                                     let infoBox = document.createElement("div");
-                                    infoBox.classList.add("info-box", `info-${part.id}`, `info-pos-${index}`); // Add unique position class
+                                    infoBox.classList.add("info-box", `info-${part.id}`);
+
 
                                     infoBox.innerHTML = `
-                                        <div class="info-header">
-                                            <strong>${part.name}</strong>
-                                        </div>
-                                        <p>${part.info}</p>
-                                        <span class="close-btn" data-id="${part.id}">&times;</span>
-                                    `;
+            <div class="info-header">
+                <strong>${part.name}</strong>
+                <span class="close-btn" data-id="${part.id}">&times;</span>
+            </div>
+            <p>${part.info}</p>
+        `;
 
-                                    document.body.appendChild(infoBox);
+                                    infoWrapper.appendChild(infoBox);
                                     activeInfoBoxes[part.id] = infoBox;
 
                                     element.style.fill = "";
                                     element.setAttributeNS(null, "fill", part.color);
 
                                     // Close button functionality
-                                    infoBox.querySelector(".close-btn").addEventListener("click", closeInfoBox);
+                                    infoBox.querySelector(".close-btn").addEventListener("click", () => closeInfoBox(part.id, element, originalColor));
                                 }
                             });
+
                         } else {
                             console.error(`Brain part with ID '${part.id}' not found in SVG.`);
                         }
@@ -485,8 +503,20 @@
 
 
 
+
                 })
                 .catch(error => console.error('Error loading SVG:', error));
+                
+
+                function resetSelections() {
+                        let confirmReset = confirm("Are you sure you want to clear all selections and start over?");
+                        if (confirmReset) {
+                            localStorage.clear();
+                            window.location.href = "index.html";
+                        }
+                    }
+
+                document.addEventListener('DOMContentLoaded', loadSelections);
 
     </script>
 

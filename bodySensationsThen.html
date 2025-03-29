@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Sensations Choice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="topDiv"></div>
+    <div class="summaryDiv"></div>
+    <div class="container">
+        <div class="container-header">
+            <h1>What sensations did you feel in your body when you felt that way?</h1>
+        </div>
+        <div class="button-grid">
+            <button onclick="selectBodySensation(this, sensation1)"></button>
+            <button onclick="selectBodySensation(this, sensation2)"></button>
+            <button onclick="selectBodySensation(this, sensation3)"></button>
+            <button onclick="selectBodySensation(this, sensation4)"></button>
+            <button onclick="selectBodySensation(this, sensation5)"></button>
+            <button onclick="selectBodySensation(this, sensation6)"></button>
+            <button onclick="selectBodySensation(this, sensation7)"></button>
+            <button onclick="selectBodySensation(this, sensation8)"></button>
+            <button onclick="selectBodySensation(this, sensation9)"></button>
+        </div>
+    </div>
+    <div class="bottomDiv">
+        <div class="nav-buttons">
+            <button class="nav-button back-button" onclick="goBack()">BACK</button>
+            <button id="nextBtn" class="nav-button next-button" disabled onclick="goToNextPage()">NEXT</button>
+        </div>
+    </div>
+
+    <script>
+        let bodySensationThen = null;
+        let previousButton = null;
+
+        // List of body sensations
+        let sensation1 = "Sweaty palms 🖐️💦";
+        let sensation2 = "Racing heart 💓";
+        let sensation3 = "Face feeling hot 🔥";
+        let sensation4 = "Knot in stomach 🤢";
+        let sensation5 = "Shaky hands 🤲";
+        let sensation6 = "Tight chest 😤";
+        let sensation7 = "Goosebumps 🦶";
+        let sensation8 = "Tense muscles 💪";
+        let sensation9 = "Dry mouth 😶";
+
+        // Populate buttons with sensations when page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            let buttons = document.querySelectorAll(".button-grid button");
+            let sensations = [sensation1, sensation2, sensation3, sensation4, sensation5, sensation6, sensation7, sensation8, sensation9];
+
+            buttons.forEach((button, index) => {
+                button.textContent = sensations[index];
+            });
+
+            // Display the previously selected emotion in the summaryDiv (if available)
+            let selectedEmotion = localStorage.getItem('emotionThen');
+            if (selectedEmotion) {
+                document.querySelector(".summaryDiv").textContent = "You felt: " + selectedEmotion;
+            }
+        });
+
+        // Function to select a body sensation
+        function selectBodySensation(button, sensation) {
+            localStorage.setItem('bodySensationThen', sensation);
+            bodySensationThen = sensation;
+
+            // Reset previous selection
+            if (previousButton) {
+                previousButton.style.backgroundColor = "";
+                previousButton.style.color = "black";
+            }
+
+            // Highlight the selected button
+            button.style.backgroundColor = "#008CBA";
+            button.style.color = "white";
+            previousButton = button;
+
+            // Enable Next button
+            document.getElementById('nextBtn').classList.add('enabled');
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        // Proceed to next page
+        function goToNextPage() {
+            if (bodySensationThen) {
+                window.location.href = "reactionChoice.html";
+            }
+        }
+
+        // Navigate back to the emotion selection page
+        function goBack() {
+            window.location.href = "emotionChoice.html";
+        }
+    </script>
+</body>
+
+</html>

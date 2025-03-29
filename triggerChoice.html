@@ -8,43 +8,17 @@
     <link rel="stylesheet" href="styles.css">
     <style>
 
-
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 80vw;
-            max-width: 600px;
-            background-color: aquamarine;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .button-grid button {
-            width: 100%;
-            padding: 15px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-        }
-
-        .button-grid button:hover {
-            background-color: #008CBA;
-            color: white;
-        }
-
-        
     </style>
 </head>
 
 <body>
-    <div class="topDiv">
-    
-    </div>
+    <div class="topDiv"></div>
+    <div class="summaryDiv"></div>
     <div class="container">
-        <h1>What happened?</h1>
-        <p>If none of these options are exactly right, just pick the one that is the closest.</p>
+        <div class="container-header">
+            <h1>What happened?</h1>
+            <p>If none of these options are exactly right, just pick the one that is the closest.</p>
+        </div>
         <div class="button-grid">
             <button onclick="selectTrigger(this, trigger1)"></button>
             <button onclick="selectTrigger(this, trigger2)"></button>
@@ -108,7 +82,7 @@
 
         function goToNextPage() {
             if (selectedTrigger) {
-                window.location.href = "reactionChoice.html";
+                window.location.href = "emotionThen.html";
             }
         }
 

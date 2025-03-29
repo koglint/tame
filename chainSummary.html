@@ -7,8 +7,6 @@
     <title>Chain Summary</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-
-
         .summary-box {
             background-color: aquamarine;
             padding: 20px;
@@ -16,11 +14,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 15px;
+            height: 80%;
+            width: 90vw;
         }
 
         .summary-item {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             padding: 10px;
             background-color: white;
             border-radius: 8px;
@@ -28,38 +29,59 @@
             text-align: center;
         }
 
-        
+        .chain-icon {
+            width: 30px;
+            height: 30px;
+        }
 
         
     </style>
 </head>
 
 <body>
-    <div class="topDiv">
-    
-    </div>
+    <div class="topDiv"></div>
+    <div class="summaryDiv"></div>
     <div class="container">
-        <h1>Summary of Your Selections</h1>
+        
         <div class="summary-box">
             <div class="summary-item" id="selectedTrigger">Trigger: Loading...</div>
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="chain-icon">
+            <div class="summary-item" id="emotionThen">Emotion Then: Loading...</div>
+            <!-- <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="chain-icon">
+            <div class="summary-item" id="bodySensationThen">Body Sensations Then: Loading...</div> -->
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="chain-icon">
             <div class="summary-item" id="selectedReaction">Reaction: Loading...</div>
-            <div class="summary-item" id="selectedEmotion">Emotion: Loading...</div>
+            <img src="assets/chain-icon-svgrepo-com.svg" alt="Chain Icon" class="chain-icon">
+            <div class="summary-item" id="consequence">Consequence: Loading...</div>
+        </div>
+        <div class="container-header">
+            <h1>Does that sound about right?</h1>
         </div>
         
     </div>
     <div class="bottomDiv">
         <div class="nav-buttons">
-            <button class="nav-button back-button" onclick="goBack()">BACK</button>
-            <button id="nextBtn" class="nav-button next-button" onclick="goToBrainPage()">NEXT</button>
+            <button class="nav-button clear-button" onclick="resetSelections()">No, let's start over</button>
+            <button class="nav-button back-button" onclick="goBack()">No, let's go back one page</button>
+            <button id="nextBtn" class="nav-button next-button" onclick="goToBrainPage()">Yes, that's right</button>
         </div>
     </div>
 
     <script>
         function loadSelections() {
-            document.getElementById('selectedTrigger').textContent = "Trigger: " + (localStorage.getItem('selectedTrigger') || "Not selected");
-            document.getElementById('selectedReaction').textContent = "Reaction: " + (localStorage.getItem('selectedReaction') || "Not selected");
-            document.getElementById('selectedEmotion').textContent = "Emotion: " + (localStorage.getItem('selectedEmotion') || "Not selected");
+            document.getElementById('selectedTrigger').textContent = "So earlier, there was a trigger event where " + (localStorage.getItem('selectedTrigger') || "Not selected");
+            document.getElementById('emotionThen').textContent = "At the time I felt " + (localStorage.getItem('emotionThen') || "Not selected");
+            // document.getElementById('bodySensationThen').textContent = "This made my body experience " + (localStorage.getItem('bodySensationThen') || "Not selected");
+            document.getElementById('selectedReaction').textContent = "Because of this event, I reacted and " + (localStorage.getItem('selectedReaction') || "Not selected");
+            document.getElementById('consequence').textContent = "Because of what happened, " + (localStorage.getItem('consequenceThen') || "Not selected");
+        }
 
+        function resetSelections() {
+            let confirmReset = confirm("Are you sure you want to clear all selections and start over?");
+            if (confirmReset) {
+                localStorage.clear();
+                window.location.href = "index.html";
+            }
         }
 
         function goToBrainPage() {
@@ -67,7 +89,7 @@
         }
 
         function goBack() {
-            window.location.href = "emotionChoice.html";
+            window.location.href = "consequence.html";
         }
 
         document.addEventListener('DOMContentLoaded', loadSelections);

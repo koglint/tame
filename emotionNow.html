@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Emotion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="topDiv"></div>
+    <div class="summaryDiv"></div>
+    <div class="container">
+        <div class="container-header"> <h1>How are you feeling right now?</h1> </div>
+        <div class="button-grid">
+            <button onclick="selectEmotion(this, emotion1)"></button>
+            <button onclick="selectEmotion(this, emotion2)"></button>
+            <button onclick="selectEmotion(this, emotion3)"></button>
+            <button onclick="selectEmotion(this, emotion4)"></button>
+            <button onclick="selectEmotion(this, emotion5)"></button>
+            <button onclick="selectEmotion(this, emotion6)"></button>
+            <button onclick="selectEmotion(this, emotion7)"></button>
+            <button onclick="selectEmotion(this, emotion8)"></button>
+            <button onclick="selectEmotion(this, emotion9)"></button>
+        </div>
+    </div>
+    <div class="bottomDiv">
+        <div class="nav-buttons">
+            <button class="nav-button back-button" onclick="goBack()">BACK</button>
+            <button id="nextBtn" class="nav-button next-button" disabled onclick="goToNextPage()">NEXT</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedEmotion = null;
+        let previousButton = null;
+
+        let emotion1 = "Angry 😡";
+        let emotion2 = "Anxious 😰";
+        let emotion3 = "Bored 🥱";
+        let emotion4 = "Annoyed 😤";
+        let emotion5 = "Sad 😢";
+        let emotion6 = "Embarrassed 😳";
+        let emotion7 = "Overwhelmed 🤯";
+        let emotion8 = "Calm 😌";
+        let emotion9 = "Numb 😑";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let buttons = document.querySelectorAll(".button-grid button");
+            let emotions = [emotion1, emotion2, emotion3, emotion4, emotion5, emotion6, emotion7, emotion8, emotion9];
+
+            buttons.forEach((button, index) => {
+                button.textContent = emotions[index];
+            });
+        });
+
+        function selectEmotion(button, emotion) {
+            localStorage.setItem('emotionNow', emotion);
+            selectedEmotion = emotion;
+
+            if (previousButton) {
+                previousButton.style.backgroundColor = "";
+                previousButton.style.color = "black";
+            }
+
+            button.style.backgroundColor = "#008CBA";
+            button.style.color = "white";
+            previousButton = button;
+
+            document.getElementById('nextBtn').classList.add('enabled');
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function goToNextPage() {
+            if (selectedEmotion) {
+                window.location.href = "chainSummary.html";
+            }
+        }
+
+        function goBack() {
+            window.location.href = "emotionThen.html";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consequence of Actions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="topDiv"></div>
+    <div class="summaryDiv"></div>
+    <div class="container">
+        <div class="container-header">
+            <h1>What was the consequence of your actions?</h1>
+        </div>
+        <div class="button-grid">
+            <button onclick="selectConsequence(this, consequence1)"></button>
+            <button onclick="selectConsequence(this, consequence2)"></button>
+            <button onclick="selectConsequence(this, consequence3)"></button>
+            <button onclick="selectConsequence(this, consequence4)"></button>
+            <button onclick="selectConsequence(this, consequence5)"></button>
+            <button onclick="selectConsequence(this, consequence6)"></button>
+            <button onclick="selectConsequence(this, consequence7)"></button>
+            <button onclick="selectConsequence(this, consequence8)"></button>
+            <button onclick="selectConsequence(this, consequence9)"></button>
+        </div>
+    </div>
+    <div class="bottomDiv">
+        <div class="nav-buttons">
+            <button class="nav-button back-button" onclick="goBack()">BACK</button>
+            <button id="nextBtn" class="nav-button next-button" disabled onclick="goToNextPage()">NEXT</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedConsequence = null;
+        let previousButton = null;
+
+        // List of possible consequences
+        let consequence1 = "I got in trouble 😞";
+        let consequence2 = "I got a detention 🏫";
+        let consequence3 = "I feel like I'm a bad person 😔";
+        let consequence4 = "I lost time with my friends 🕒";
+        let consequence5 = "I hurt someone else 💔";
+        let consequence6 = "I feel guilty 😣";
+        let consequence7 = "My parents will be upset with me 😟";
+        let consequence8 = "I disappointed myself 😞";
+        let consequence9 = "Nothing happened 🤷";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let buttons = document.querySelectorAll(".button-grid button");
+            let consequences = [consequence1, consequence2, consequence3, consequence4, consequence5, consequence6, consequence7, consequence8, consequence9];
+
+            buttons.forEach((button, index) => {
+                button.textContent = consequences[index];
+            });
+
+            // Display the previous choices in the summaryDiv
+            let selectedEmotion = localStorage.getItem('emotionNow');
+            let selectedBodySensation = localStorage.getItem('bodySensationThen');
+            let selectedReaction = localStorage.getItem('reactionThen');
+
+            let summaryText = "";
+            if (selectedEmotion) summaryText += `Emotion: ${selectedEmotion} | `;
+            if (selectedBodySensation) summaryText += `Sensation: ${selectedBodySensation} | `;
+            if (selectedReaction) summaryText += `Reaction: ${selectedReaction}`;
+
+            if (summaryText) {
+                document.querySelector(".summaryDiv").textContent = summaryText;
+            }
+        });
+
+        function selectConsequence(button, consequence) {
+            localStorage.setItem('consequenceThen', consequence);
+            selectedConsequence = consequence;
+
+            // Reset previous selection
+            if (previousButton) {
+                previousButton.style.backgroundColor = "";
+                previousButton.style.color = "black";
+            }
+
+            // Highlight the selected button
+            button.style.backgroundColor = "#008CBA";
+            button.style.color = "white";
+            previousButton = button;
+
+            // Enable Next button
+            document.getElementById('nextBtn').classList.add('enabled');
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function goToNextPage() {
+            if (selectedConsequence) {
+                window.location.href = "chainSummary.html";
+            }
+        }
+
+        function goBack() {
+            window.location.href = "reactionChoice.html";
+        }
+    </script>
+</body>
+
+</html>

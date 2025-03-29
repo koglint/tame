@@ -8,41 +8,15 @@
     <link rel="stylesheet" href="styles.css">
     <style>
 
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 80vw;
-            max-width: 600px;
-            background-color: aquamarine;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .button-grid button {
-            width: 100%;
-            padding: 15px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-        }
-
-        .button-grid button:hover {
-            background-color: #008CBA;
-            color: white;
-        }
-
-        
+       
     </style>
 </head>
 
 <body>
-    <div class="topDiv">
-    
-    </div>
+    <div class="topDiv"></div>
+    <div class="summaryDiv"></div>
     <div class="container">
-        <h1>How did you react?</h1>
+        <div class="container-header"> <h1>How did you react?</h1> </div>
         <div class="button-grid">
             <button onclick="selectReaction(this, reaction1)"></button>
             <button onclick="selectReaction(this, reaction2)"></button>
@@ -50,6 +24,9 @@
             <button onclick="selectReaction(this, reaction4)"></button>
             <button onclick="selectReaction(this, reaction5)"></button>
             <button onclick="selectReaction(this, reaction6)"></button>
+            <button onclick="selectReaction(this, reaction7)"></button>
+            <button onclick="selectReaction(this, reaction8)"></button>
+            <button onclick="selectReaction(this, reaction9)"></button>
         </div>
         
     </div>
@@ -69,11 +46,14 @@
         let reaction3 = "I was violent";
         let reaction4 = "I broke something";
         let reaction5 = "I stole something";
-        let reaction6 = "I was disrespectful to someone";
+        let reaction6 = "I was disrespectful to others";
+        let reaction7 = "I did something dangerous";
+        let reaction8 = "I hurt myself";
+        let reaction9 = "I was disrespectful to myself";
 
         document.addEventListener("DOMContentLoaded", function () {
             let buttons = document.querySelectorAll(".button-grid button");
-            let reactions = [reaction1, reaction2, reaction3, reaction4, reaction5, reaction6];
+            let reactions = [reaction1, reaction2, reaction3, reaction4, reaction5, reaction6, reaction7, reaction8, reaction9];
 
             buttons.forEach((button, index) => {
                 button.textContent = reactions[index];
@@ -99,12 +79,12 @@
 
         function goToNextPage() {
             if (selectedReaction) {
-                window.location.href = "emotionChoice.html";
+                window.location.href = "consequence.html";
             }
         }
 
         function goBack() {
-            window.location.href = "triggerChoice.html";
+            window.location.href = "emotionThen.html";
         }
     </script>
 </body>
